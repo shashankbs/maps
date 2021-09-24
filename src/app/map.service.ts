@@ -56,7 +56,12 @@ export class MapService {
             [result['position'].lat, result['position'].lon],
             { icon: cinemaIcon }
           );
-          marker.bindPopup(this.randomPopup(result['poi'].name));
+          marker.bindPopup(
+            this.randomPopup(
+              result['poi'].name,
+              result['address'].freeformAddress
+            )
+          );
           marker.addTo(map);
         }
       });
@@ -68,15 +73,17 @@ export class MapService {
   }
 
   //theater names
-  randomPopup(i: String) {
-    return `` + `<div> ${i}</div>`;
+  randomPopup(i: String, a: String) {
+    return `` + `<div> ${i}</div>` + `<div><b>Address</b> : ${a}</div>`;
   }
 
   //state and UT names
   makeStatePopup(data: any): string {
     if (data.State) {
-      return `` + `<div>State: ${data.State}</div>`;
+      return `` + `<div><b>State :</b> ${data.State}</div>`;
     }
-    return `` + `<div>Union Territory: ${data['Union Territory']}</div>`;
+    return (
+      `` + `<div><b>Union Territory :</b> ${data['Union Territory']}</div>`
+    );
   }
 }
